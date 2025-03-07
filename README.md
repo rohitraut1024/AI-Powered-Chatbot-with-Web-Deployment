@@ -1,5 +1,11 @@
 # AI-Powered Chatbot with Web Deployment
 
+
+## Chatbot UI Preview 🖥️
+
+![Chatbot Screenshot](static/images/screenshot.png)
+
+
 ## Overview
 This project is a **contextual AI chatbot** built using **PyTorch, NLTK, and Flask**. 
 It supports both **command-line interaction** and a **web-based interface**. 
