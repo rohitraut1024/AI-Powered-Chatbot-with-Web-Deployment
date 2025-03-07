@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body {
+            background: url('https://static.vecteezy.com/system/resources/previews/037/133/618/non_2x/artificial-intelligence-chipset-on-circuit-board-in-futuristic-concept-technology-artwork-for-web-banner-card-cover-illustration-vector.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: #0f0;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .chat-container {
+            width: 40%;
+            margin: auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #0f0;
+        }
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #0f0;
+            background: #000;
+            text-align: left;
+        }
+        .input-area {
+            margin-top: 10px;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            background: #222;
+            border: 1px solid #0f0;
+            color: #0f0;
+        }
+        button {
+            padding: 10px;
+            background: #0f0;
+            color: #000;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0a0;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h2>Chatbot</h2>
+        <div class="chat-box" id="chat-box"></div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            let userInput = document.getElementById("user-input").value;
+            if (!userInput) return;
+            let chatBox = document.getElementById("chat-box");
+            chatBox.innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
+            
+            fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                chatBox.innerHTML += `<p><strong>Bot:</strong> ${data.response}</p>`;
+                document.getElementById("user-input").value = "";
+                chatBox.scrollTop = chatBox.scrollHeight;
+            });
+        }
+    </script>
+</body>
+</html>
